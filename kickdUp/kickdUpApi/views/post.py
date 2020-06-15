@@ -3,7 +3,6 @@ from rest_framework.viewsets import ViewSet
 from rest_framework.response import Response
 from rest_framework import serializers
 from rest_framework import status
-from django.contrib.auth.models import User
 from ..models import SneakerPost, Manufacturer
 from datetime import datetime
 
@@ -17,7 +16,7 @@ class PostSerializer(serializers.HyperlinkedModelSerializer):
             lookup_field="id"
         )
         fields = ('id', 'manufacturer', 'model', 'colorway',
-                  'description', 'create_at', 'user_id')
+                  'description', 'create_at', 'user')
         depth = 1
 
 
@@ -45,9 +44,7 @@ class Posts(ViewSet):
         new_post.description = request.data["description"]
         new_post.create_at = datetime.now()
 
-        user = User.objects.get(pk=request.auth.user.id)
-
-        new_post.user = user
+        new_post.user = request.auth.user
 
         manufacturer = Manufacturer.objects.get(pk=request.data["manufacturer_id"])
 
