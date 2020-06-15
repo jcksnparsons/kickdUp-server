@@ -7,8 +7,8 @@ from .manufacturer import Manufacturer
 
 class SneakerPost(models.Model):
 
-    user = models.OneToOneField(User, on_delete=models.DO_NOTHING)
-    manufacturer = models.OneToOneField(Manufacturer, on_delete=models.DO_NOTHING)
+    user = models.ForeignKey(User, on_delete=models.DO_NOTHING)
+    manufacturer = models.ForeignKey(Manufacturer, on_delete=models.DO_NOTHING)
     model = models.CharField(max_length=55)
     colorway = models.CharField(max_length=125)
     description = models.CharField(max_length=255)
