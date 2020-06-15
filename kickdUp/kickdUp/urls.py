@@ -23,6 +23,8 @@ router = routers.DefaultRouter(trailing_slash=False)
 router.register(r'manufacturers', Manufacturers, 'manufacturer')
 urlpatterns = [
     path('', include(router.urls)),
+    path('register/', register_user),
+    path('login/', login_user),
     path('api-token-auth/', obtain_auth_token),
     path('api-auth/', include('rest_framework.urls', namespace='rest_framework')),
 ]
