@@ -21,6 +21,9 @@ from kickdUpApi.views import *
 
 router = routers.DefaultRouter(trailing_slash=False)
 router.register(r'manufacturers', Manufacturers, 'manufacturer')
+router.register(r'posts', Posts, 'post')
+router.register(r'users', Users, 'user')
+
 urlpatterns = [
     path('', include(router.urls)),
     path('register/', register_user),
