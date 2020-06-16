@@ -5,3 +5,4 @@ from .post import Posts
 from .user import Users
 from .comment import Comments
 from .following import Followings
+from .photo import Photos
