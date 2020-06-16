@@ -46,7 +46,8 @@ class Posts(ViewSet):
 
         new_post.user = request.auth.user
 
-        manufacturer = Manufacturer.objects.get(pk=request.data["manufacturer_id"])
+        manufacturer = Manufacturer.objects.get(
+            pk=request.data["manufacturer_id"])
 
         new_post.manufacturer = manufacturer
 
@@ -55,16 +56,30 @@ class Posts(ViewSet):
         serializer = PostSerializer(new_post, context={'request': request})
         return Response(serializer.data)
 
+    def patch(self, request, pk=None):
+        try:
+            post = SneakerPost.objects.get(pk=pk)
+            post.description = request.data["description"]
+
+            serializer = PostSerializer(
+                post, context={'request': request}, partial=True)
+
+            post.save()
+
+            return Response(status=status.HTTP_201_CREATED, data=serializer.data)
+
+        except SneakerPost.DoesNotExist as ex:
+            return Response({'message': ex.args[0]}, status=status.HTTP_404_NOT_FOUND)
+
     def destroy(self, request, pk=None):
         try:
             post = SneakerPost.objects.get(pk=pk)
             post.delete()
 
             return Response({}, status=status.HTTP_204_NO_CONTENT)
-        
+
         except SneakerPost.DoesNotExist as ex:
             return Response({'message': ex.args[0]}, status=status.HTTP_404_NOT_FOUND)
 
         except Exception as ex:
             return Response({'message': ex.args[0]}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
-        
