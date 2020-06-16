@@ -24,6 +24,7 @@ router.register(r'manufacturers', Manufacturers, 'manufacturer')
 router.register(r'posts', Posts, 'post')
 router.register(r'users', Users, 'user')
 router.register(r'comments', Comments, 'comment')
+router.register(r'followings', Followings, 'following')
 
 urlpatterns = [
     path('', include(router.urls)),
