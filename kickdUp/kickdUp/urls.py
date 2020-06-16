@@ -23,6 +23,7 @@ router = routers.DefaultRouter(trailing_slash=False)
 router.register(r'manufacturers', Manufacturers, 'manufacturer')
 router.register(r'posts', Posts, 'post')
 router.register(r'users', Users, 'user')
+router.register(r'comments', Comments, 'comment')
 
 urlpatterns = [
     path('', include(router.urls)),
