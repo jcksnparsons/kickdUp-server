@@ -58,9 +58,11 @@ class Photos(ViewSet):
     def destroy(self, request, pk=None):
         try:
             photo = Photo.objects.get(pk=pk)
-            serializer = PhotoSerializer(photo, context={
-                'request': request
-            })
-            return Response(serializer.data)
+            photo.delete()
+
+            return Response({}, status=status.HTTP_204_NO_CONTENT)
+
+        except Photo.DoesNotExist as ex:
+            return Response({'message': ex.args[0]}, status=status.HTTP_404_NOT_FOUND)
         except Exception as ex:
-            return HttpResponseServerError(ex)
+            return Response({'message': ex.args[0]}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
