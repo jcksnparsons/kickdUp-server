@@ -16,14 +16,14 @@ class PostSerializer(serializers.HyperlinkedModelSerializer):
             lookup_field="id"
         )
         fields = ('id', 'manufacturer', 'model', 'colorway',
-                  'description', 'create_at', 'user')
+                  'description', 'create_at', 'user_id', 'user')
         depth = 1
 
 
 class Posts(ViewSet):
 
     def list(self, request):
-        posts = SneakerPost.objects.all()
+        posts = SneakerPost.objects.all().order_by('-create_at')
         serializer = PostSerializer(
             posts, many=True, context={'request': request})
         return Response(serializer.data)
