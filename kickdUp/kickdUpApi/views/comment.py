@@ -5,6 +5,7 @@ from rest_framework import serializers
 from rest_framework import status
 from ..models import SneakerPost, Comment
 from datetime import datetime
+from django.contrib.auth.models import User
 
 
 class CommentSerializer(serializers.HyperlinkedModelSerializer):
@@ -15,13 +16,17 @@ class CommentSerializer(serializers.HyperlinkedModelSerializer):
             view_name="comment",
             lookup_field="id"
         )
-        fields = ('id', 'post_id', 'user_id', 'content', 'create_at')
+        fields = ('id', 'post_id', 'user', 'user_id', 'content', 'create_at')
+        depth = 1
 
 
 class Comments(ViewSet):
 
     def list(self, request):
         comments = Comment.objects.all()
+        post = self.request.query_params.get("post", None)
+        if post is not None:
+            comments = comments.filter(post__id=post)
         serializer = CommentSerializer(
             comments, many=True, context={'request': request}
         )
@@ -30,6 +35,7 @@ class Comments(ViewSet):
     def retrieve(self, request, pk=None):
         try:
             comment = Comment.objects.get(pk=pk)
+            comment.user = User.objects.get(pk=comment.user_id)
             serializer = CommentSerializer(
                 comment, context={'request': request})
             return Response(serializer.data)

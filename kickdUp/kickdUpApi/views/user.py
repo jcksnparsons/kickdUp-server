@@ -23,3 +23,11 @@ class Users(ViewSet):
             return Response(serializer.data)
         except Exception as ex:
             return HttpResponseServerError(ex)
+
+    def list(self, request):
+        try:
+            users = User.objects.filter(username=request.auth.user.username)
+            serializer = UserSerializer(users, many=True, context={'request': request})
+            return Response(serializer.data)
+        except Exception as ex:
+            return HttpResponseServerError(ex)
