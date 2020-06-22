@@ -17,6 +17,7 @@ class CommentSerializer(serializers.HyperlinkedModelSerializer):
             lookup_field="id"
         )
         fields = ('id', 'post_id', 'user', 'user_id', 'content', 'create_at')
+        depth = 1
 
 
 class Comments(ViewSet):
