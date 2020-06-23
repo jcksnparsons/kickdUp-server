@@ -24,6 +24,9 @@ class Photos(ViewSet):
 
     def list(self, request):
         photos = Photo.objects.all()
+        post = self.request.query_params.get("post", None)
+        if post is not None:
+            photos = photos.filter(post__id=post)
         serializer = PhotoSerializer(
             photos, many=True, context={'request': request}
         )
