@@ -45,7 +45,7 @@ class Photos(ViewSet):
 
         new_photo.post = post
 
-        new_photo.image = request.data["image"]
+        new_photo.image = request.FILES("image")
 
         new_photo.save()
 
