@@ -24,6 +24,9 @@ class Posts(ViewSet):
 
     def list(self, request):
         posts = SneakerPost.objects.all().order_by('-create_at')
+        user = self.request.query_params.get("user", None)
+        if user is not None:
+            posts = posts.filter(user__id=user)
         serializer = PostSerializer(
             posts, many=True, context={'request': request})
         return Response(serializer.data)

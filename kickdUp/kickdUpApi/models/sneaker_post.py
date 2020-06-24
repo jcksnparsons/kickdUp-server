@@ -13,3 +13,7 @@ class SneakerPost(models.Model):
     colorway = models.CharField(max_length=125)
     description = models.CharField(max_length=255)
     create_at = models.DateTimeField()
+
+    class Meta:
+        verbose_name = ("post")
+        verbose_name_plural = ("posts")
