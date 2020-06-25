@@ -3,7 +3,7 @@ from rest_framework.viewsets import ViewSet
 from rest_framework.response import Response
 from rest_framework import serializers
 from rest_framework import status
-from ..models import SneakerPost, Manufacturer
+from ..models import SneakerPost, Manufacturer, Photo
 from datetime import datetime
 
 
