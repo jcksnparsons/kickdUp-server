@@ -3,7 +3,7 @@ from rest_framework.viewsets import ViewSet
 from rest_framework.response import Response
 from rest_framework import serializers
 from rest_framework import status
-from ..models import SneakerPost, Manufacturer
+from ..models import SneakerPost, Manufacturer, Photo
 from datetime import datetime
 
 
@@ -24,6 +24,9 @@ class Posts(ViewSet):
 
     def list(self, request):
         posts = SneakerPost.objects.all().order_by('-create_at')
+        user = self.request.query_params.get("user", None)
+        if user is not None:
+            posts = posts.filter(user__id=user)
         serializer = PostSerializer(
             posts, many=True, context={'request': request})
         return Response(serializer.data)

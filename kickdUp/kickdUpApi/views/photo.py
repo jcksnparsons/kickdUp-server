@@ -16,6 +16,7 @@ class PhotoSerializer(serializers.HyperlinkedModelSerializer):
             lookup_field="id"
         )
         fields = ("id", 'image', 'post_id')
+        depth = 1
 
 
 class Photos(ViewSet):

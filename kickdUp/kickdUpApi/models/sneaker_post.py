@@ -7,9 +7,13 @@ from .manufacturer import Manufacturer
 
 class SneakerPost(models.Model):
 
-    user = models.ForeignKey(User, on_delete=models.DO_NOTHING)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
     manufacturer = models.ForeignKey(Manufacturer, on_delete=models.DO_NOTHING)
     model = models.CharField(max_length=55)
     colorway = models.CharField(max_length=125)
     description = models.CharField(max_length=255)
     create_at = models.DateTimeField()
+
+    class Meta:
+        verbose_name = ("post")
+        verbose_name_plural = ("posts")
