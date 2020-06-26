@@ -22,6 +22,6 @@ class Manufacturers(ViewSet):
             return Response(serializer.data)
 
     def list(self, request):
-            manufacturers = Manufacturer.objects.all()
+            manufacturers = Manufacturer.objects.all().order_by('name')
             serializer = ManufacturerSerializer(manufacturers, many=True, context={'request': request})
             return Response(serializer.data)
